@@ -1,0 +1,143 @@
+<html lang="en">
+<head>
+  <title>Pizza Cart</title>
+
+  <!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="styles/cartStyle.css" />
+  <link rel="stylesheet" href="styles/styles.css" />
+  <script type="text/javascript" src="scripts/js/helpers.js"></script>
+  <script type="text/javascript" src="scripts/js/cartScripts.js"></script>
+
+  <script>
+    $(document).ready(function () {
+      if (checkAuth()) {
+        showCartItemsDB(true, true)
+      } else {
+        showCartItemsInStorage(true, true)
+      }
+    })
+  </script>
+
+</head>
+  <body>
+  <!--Navbar-->
+  <div class = "topnav">
+            
+    <img src="./images/logo.jpg" alt="logo" >
+
+    <a class ="active" href="index.html">Homepage</a>
+    <a href = "menu.html">Menu</a>
+    <a id ="a1" href="cart.html">Cart<span id='cart' style="color: red;"></span></a>
+    <a id ="a1" class="placehd" href = "login.html">Login</a1>
+    <a id ="a1" class="placehd" href = "register.html">Register</a>
+
+
+  </div>
+
+   <div class = "cart-page">
+     <h1>Your Cart</h1>
+     <label id="msg" style="color:red"></label><br>
+     <!--Table Food-->
+    <table id="table-order-list">
+      <tr>
+        <th>Product</th>
+        <th>Quantity</th>
+        <th>Subtotal</th>
+      </tr>
+      <!--Item 1-->
+      <!-- <tr>
+        <td>
+          <div class="cart-info">
+            <img src ="images/pizza_menu/beef pizza.jpg"  alt="cart-item" width="800" height="200" >
+            <div>
+              <input type="checkbox" id="item-1" value="pizza-1">
+              <label for="pizza-1"> Favorite</label><br>
+              <p>Beef Pizza</p>
+              <p>Ingredients: Beef, Onion, Cheese, Tomato</p>
+              <p>Size: Medium</p>
+              <p>Crust: Regular</p>
+              <small>Price:$15</small>
+              <br>
+              <button class="remove-btn">Remove</button>
+              <button class="re-order-btn" onclick="location.href='order.html'" >Order Again</button>
+            </div>
+          </div>
+        </td>
+        <td><input type = "number" value = "1"></td>
+        <td>$15</td>
+      </tr>
+
+      <tr>
+        <td>
+          <div class="cart-info">
+            <img src ="images/pizza_menu/chicken pizza.jfif"  alt="cart-item" width="800" height="200" >
+            <div>
+              <input type="checkbox" id="item-2" value="pizza-2">
+              <label for="pizza-1"> Favorite</label><br>
+              <p>Chicken Pizza</p>
+              <p>Ingredients: Chicken, Onion, Cheese, Tomato</p>
+              <p>Size: Medium</p>
+              <p>Crust: Regular</p>
+              <small>Price: $14</small>
+              <br>
+              <button class="remove-btn">Remove</button>
+              <button class="re-order-btn" onclick="location.href='order.html'" >Order Again</button>
+            </div>
+          </div>
+        </td>
+        <td><input type = "number" value = "1"></td>
+        <td>$14</td>
+      </tr>
+            
+      
+       <tr>
+        <td>
+          <div class="cart-info">
+            <img src ="images/pizza_menu/cheese.jpg"  alt="cart-item" width="800" height="200" >
+            <div>
+              <input type="checkbox" id="item-3" value="pizza-3">
+              <label for="pizza-3"> Favorite</label><br>
+              <p>Cheese Pizza</p>
+              <p>Ingredients: Combo Cheese and Tomato</p>
+              <p>Size: Medium</p>
+              <p>Crust: Regular</p>
+              <small>Price: $12</small>
+              <br>
+              <button class="remove-btn">Remove</button>
+              <button class="re-order-btn" onclick="location.href='order.html'" >Order Again</button>
+            </div>
+          </div>
+        </td>
+        <td><input type = "number" value = "1"></td>
+        <td>$12</td>
+      </tr> -->
+
+
+ </table>
+<!--End Table-->
+ <div class ="total-price">
+      <table>
+        <tr>
+          <td>Subtotal</td>
+          <td class="totals-value" id="cart-subtotal">$0.00</td>
+        </tr>
+        <tr>
+          <td>Tax</td>
+          <td class="totals-value" id="cart-tax">$0.00</td>
+        </tr>
+        <tr>
+          <td>Total</td>
+          <td class="totals-value" id="cart-total">$0.00</td>
+        </tr>
+
+      </table>
+ </div>
+
+
+
+   </div>
+   <button id='checkout' onclick="location.href='checkout.html'"   class="check-out-btn"  >CHECK OUT</button>
+</body>
+
+</html>

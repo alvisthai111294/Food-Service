@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Menu</title>
+
+    <link rel="stylesheet" href="styles/menuTestStyle.css">
+    <link rel="stylesheet" href="styles/styles.css">
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script type="text/javascript" src="scripts/js/helpers.js"></script>
+
+    <script>
+
+        async function listProducts() {
+            let response = await fetch("/products",  {
+                method: 'GET',
+            })
+            if (response.ok) {
+                let json = await response.json()
+
+                products = json.products
+
+                var con = document.getElementById("container")
+                
+                for (var i = 0; i < products.length; i++) {
+
+                    var href = 'order.html?id=' + products[i].productid
+
+                    var divSingleMenu = document.createElement("div")
+                    divSingleMenu.setAttribute('class', 'single-menu')
+                    con.appendChild(divSingleMenu)
+
+                    var a = document.createElement("a")
+                    a.setAttribute('href', href)
+                    a.setAttribute('target', '_self')
+                    divSingleMenu.appendChild(a)
+
+                    var img = document.createElement("img")
+                    img.setAttribute('src', products[i].imagepath)
+                    img.setAttribute('alt', products[i].name)
+                    img.setAttribute('width', '700')
+                    img.setAttribute('height', '100')
+                    a.appendChild(img)
+
+                    var div = document.createElement("div")
+                    div.setAttribute('class', 'menu-content')
+                    divSingleMenu.appendChild(div)
+
+                    h1 = document.createElement("h1")
+                    div.appendChild(h1)
+
+                    a = document.createElement("a")
+                    a.setAttribute('href', href)
+                    a.setAttribute('target', '_self')
+                    a.innerHTML = products[i].name
+                    h1.appendChild(a)
+
+                    var span = document.createElement("span")
+                    span.innerHTML = products[i].baseprice
+                    h1.appendChild(span)
+
+                    p = document.createElement("p")
+                    p.innerHTML = products[i].description
+                    div.appendChild(p)
+                }
+
+            } else {
+                failResponse(response)
+            }
+        }
+
+        $(document).ready(function () {
+            checkAuth()
+
+            listProducts()
+        })
+
+    </script>
+
+</head>
+<body>
+    <!--Navbar-->
+    <div class = "topnav">
+        
+        
+        <img src="./images/logo.jpg" alt="logo" >
+        <a class = "active" href = "index.html">Homepage</a>
+        <a href = "menu.html">Menu</a>
+        <a id ="a1" href = "cart.html">Cart<span id='cart' style="color: red;"></span></a>
+        <a id ="a1" class="placehd" href = "login.html">Login</a1>
+        <a id ="a1" class="placehd" href = "register.html">Register</a>
+        
+        
+    </div>
+    
+    <div class="header">
+        <div class="title">
+            <h1>Hello Pizza Menu</h1>
+            <span>Fresh Fast & Delicious Pizza</span>
+        </div>
+        <div id="container" class="menu">
+        </div>
+    </div>
+</body>
+</html>

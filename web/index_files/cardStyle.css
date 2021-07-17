@@ -1,0 +1,105 @@
+
+.grid-main{
+  width:500px;
+  margin-top: 20px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  background-color: white;
+  text-align: center;
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  border: 3px solid red;
+  
+
+}
+.grid-main>.price{
+    color: orange;
+    font-size: 22px;
+}
+.grid-main button{
+    border: none;
+    outline: 0;
+    padding: 12px;
+    color: white;
+    background-color: red;
+    text-align: center;
+    cursor: pointer;
+    width: 100%;
+    font-size: 18px;
+}
+
+
+
+
+
+.grid-container {
+   
+ 
+  
+  margin-top: 20px;
+  text-align: center;
+  font-family: arial;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-gap: 50px;
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  border: 3px solid rgb(230, 103, 103);
+
+
+}
+
+  .grid-item {
+    background-color: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(0, 0, 0, 0.8);
+    padding: 20px;
+    font-size: 30px;
+    text-align: center;
+ 
+    
+  }
+  .grid-item .price{
+    
+      color: orange;
+      font-size: 22px;
+    
+  }
+  .grid-item button{
+    border: none;
+    outline: 0;
+    padding: 12px;
+    color: white;
+    background-color: red;
+    text-align: center;
+    cursor: pointer;
+    width: 100%;
+    font-size: 18px;
+  }
+
+
+
+  
+  .grid-item button:hover {
+    opacity: 0.7;
+  }
+
+
+
+
+
+  h1{
+    color: red;
+   
+  }
+  h2{
+      font-size: 20px;
+     
+  }
+  p{
+      font-size: 20px;
+      
+  }
+  
+
+  

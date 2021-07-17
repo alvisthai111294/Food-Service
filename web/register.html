@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Register</title>
+        <link rel="stylesheet" href="styles/styles.css" />
+        <style>
+            *{box-sizing: border-box}
+            /* Add padding to register */
+            .register{
+                font-weight: bold;
+                font-size: large;
+                padding: 16px;
+                color:	black;
+            }
+            /* Full-width input fields */
+            input[type = text], input[type = password]{
+                width: 100%;
+                padding: 20px;
+                margin: 10px 0 25px 0;
+                display: inline-block;
+                border: none;
+                background: #f1f1f1;
+            }
+    
+            input[type= text]:focus, input[type= password]:focus {
+                background-color:white;
+                outline:none;
+            }
+            /* Set a style for the submit/register button */
+            .register-button{
+                background-color: #f05d239f;
+                color: black;
+                padding: 16px 20px;
+                margin: 8px 0;
+                border:none;
+                cursor: pointer;
+                width: 100%;
+                opacity: 0.9;
+                font-weight: bold;
+                font-size: large;
+            }
+            /* Add a text color to links */
+            .register-button:hover{
+                opacity:10;
+            }
+            a{
+                color:black;
+            }
+            .login{
+                background-color: #f05d239f;
+                text-align: center;
+                font-size: 20px;
+                color:black;
+            }
+          
+          
+        </style>
+    
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+        <script>
+
+            async function register() {
+
+                let response = await fetch("/auth",  {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json;charset=utf-8'
+                    },
+                    body: JSON.stringify({
+                        "first": $("#firstname").val()
+                        , "last": $("#lastname").val()
+                        , "email": $("#email").val()
+                        , "password": $("#password").val()
+                        , "confirmpassword": $("#password-repeat").val()
+                    })
+                })
+                if (response.ok) { // if HTTP-status is 200-299
+                    // get the response body (the method explained below)
+                    let json = await response.json()
+
+                    if (json.success) {
+                        sessionStorage.setItem("email", $('input[name="email"]').val())
+                        sessionStorage.setItem("password", $('input[name="password"]').val())
+                        window.location.href = "login.html";
+                    }
+                } else {
+                    // alert("HTTP-Error: " + response.status)
+                    console.log(response.status)
+                    let json = await response.json()
+                    // console.log(json)
+                    $("#errorMessage").html(json.message)
+                }
+            }
+
+            $(document).ready(function () {
+                if (typeof(Storage) !== "undefined") {
+                    $("#btnRegister").click(function () {
+                        if ($("#firstname").val() === '') {
+                            $("#errorMessage").html("*First Name is empty!")
+                        } else if ($("#lastname").val() === '') {
+                            $("#errorMessage").html("*Last Name is empty!")
+                        } else if ($("#email").val() === '') {
+                            $("#errorMessage").html("*Email is empty!")
+                        } else if (!$("#email").val().includes('@') || !$("#email").val().includes('.')) {
+                            $("#errorMessage").html("*Email is invalid!")
+                        } else if ($("#password").val() === '') {
+                            $("#errorMessage").html("*Password is empty!")
+                        } else if ($("#password").val().length < 8) {
+                            $("#errorMessage").html("*Password is too weak! Should be more then 8 characters.")
+                        } else if ($("#password-repeat").val() === '') {
+                            $("#errorMessage").html("*Repeat Password is empty!")
+                        } else {
+                            if ($("#password").val() !== $("#password-repeat").val()) {
+                                $("#errorMessage").html("*Password and Repeat Password don't match!")
+                            } else {
+                                $("#errorMessage").html("")
+                                register()
+                            }
+                        }
+                    })
+                }
+            })
+            
+        </script>
+    </head>
+    <body>
+  <!--Navbar-->
+  <div class = "topnav">
+            
+    <img src="./images/logo.jpg" alt="logo" >
+
+    <a class ="active" href="index.html">Homepage</a>
+    <a href = "menu.html">Menu</a>
+  
+   
+   
+
+  </div>
+
+
+
+        <div class ="register">
+            <h1>Register</h1>
+            <label id="errorMessage" style="color:red"></label><br>
+            <p>Please fill this form to create an account with us</p>
+            <hr>
+            <label for ="firstname"><b>First Name</b></label>
+            <input type ="text" placeholder="Enter First Name" id ="firstname" required>
+    
+            <label for ="lastname"><b>Last Name</b></label>
+            <input type ="text" placeholder="Enter Last Name" id ="lastname" required>
+    
+            <label for ="email"><b>Email</b></label>
+            <input type ="text" placeholder="Enter Email" name = "email" id ="email" required>
+    
+            <label for ="password"><b>Password</b></label>
+            <input type ="password" placeholder="Enter Password" name = "password" id ="password" required>
+        
+            <label for ="password-repeat"><b>Repeat Password</b></label>
+            <input type ="password" placeholder="Repeat Password" name = "password-repeat" id ="password-repeat" required>
+            <hr>
+    
+            <p>By creating an account you  agree to our <a href = "policy.html">Terms & Privacy</a>.</p>
+            <button type = "submit" class ="register-button" id="btnRegister">Register</button>
+        
+        </div>
+        <div class = "login">
+            <p>Already have an account? <a href ="login.html">Login</a></p>
+        </div>
+
+
+
+
+    </body>
+    
+   
+    
+  
+    
+</html>

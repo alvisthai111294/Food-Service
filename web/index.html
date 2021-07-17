@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<!-- saved from url=(0042)https://tcss460-foodservice.herokuapp.com/ -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <title>Restaurant Homepage</title>
+
+    <link rel="stylesheet" href="./index_files/styles.css">
+
+    <link rel="stylesheet" href="./index_files/cardStyle.css">
+    
+    <script src="./index_files/jquery.min.js.download"></script>
+
+    <script type="text/javascript" src="./index_files/helpers.js.download"></script>
+
+    <script>
+
+        async function listProducts() {
+            let response = await fetch("/products",  {
+                method: 'GET',
+            })
+            if (response.ok) {
+                let json = await response.json()
+
+                products = json.products
+
+                var divMain = document.getElementById("grid-main")
+                var divContainer = document.getElementById("grid-container")
+                
+                var flag = true
+                for (var i = 0; i < products.length; i++) {
+
+                    var href = 'order.html?id=' + products[i].productid
+
+                    if (products[i].special) {
+                        flag = false
+
+                        var img = document.createElement("img")
+                        img.setAttribute('src', products[i].imagepath)
+                        img.setAttribute('alt', products[i].name)
+                        img.setAttribute('style', 'width:100%')
+                        divMain.appendChild(img)
+
+                        var h1 = document.createElement("h1")
+                        h1.innerHTML = products[i].name
+                        divMain.appendChild(h1)
+
+                        var p = document.createElement("p")
+                        p.innerHTML = products[i].description
+                        divMain.appendChild(p)
+
+                        p = document.createElement("p")
+                        p.innerHTML = 'Starting At:'
+                        divMain.appendChild(p)
+
+                        p = document.createElement("p")
+                        p.setAttribute('class', 'price')
+                        p.innerHTML = products[i].baseprice
+                        divMain.appendChild(p)
+
+                        var button = document.createElement("button")
+                        button.setAttribute('onclick', "window.location.href='" + href + "'")
+                        button.innerHTML = 'Order Now'
+                        divMain.appendChild(button)
+                    } else {
+                        var div = document.createElement("div")
+                        div.setAttribute('class', 'grid-item')
+                        divContainer.appendChild(div)
+
+                        var img = document.createElement("img")
+                        img.setAttribute('src', products[i].imagepath)
+                        img.setAttribute('alt', products[i].name)
+                        img.setAttribute('width', '200')
+                        img.setAttribute('height', '300')
+                        img.setAttribute('style', 'width:100%')
+                        div.appendChild(img)
+
+                        var h2 = document.createElement("h2")
+                        h2.innerHTML = products[i].name
+                        div.appendChild(h2)
+
+                        var p = document.createElement("p")
+                        p.innerHTML = 'Starting At:'
+                        div.appendChild(p)
+
+                        p = document.createElement("p")
+                        p.setAttribute('class', 'price')
+                        p.innerHTML = products[i].baseprice
+                        div.appendChild(p)
+
+                        var button = document.createElement("button")
+                        button.setAttribute('onclick', "window.location.href='" + href + "'")
+                        button.innerHTML = 'Order Now'
+                        div.appendChild(button)
+                    }
+                }
+
+                if (flag) {
+                    $( "#grid-main" ).remove();
+                }
+
+            } else {
+                failResponse(response)
+            }
+        }
+
+        $(document).ready(function () {
+            checkAuth()
+
+            listProducts()
+        })
+
+    </script>
+        
+</head>
+   
+<body data-new-gr-c-s-check-loaded="14.1022.0" data-gr-ext-installed="">
+    <!--Navbar-->
+    <div class="topnav">
+
+    <img src="./index_files/logo.jpg" alt="logo">
+
+    <a class="active" href="https://tcss460-foodservice.herokuapp.com/index.html">Homepage</a>
+    <a href="https://tcss460-foodservice.herokuapp.com/menu.html">Menu</a>
+    <a id="a1" href="https://tcss460-foodservice.herokuapp.com/cart.html">Cart<span id="cart" style="color: red;"></span></a>
+    <a id="a1" class="placehd" href="https://tcss460-foodservice.herokuapp.com/login.html">Login
+    </a><a id="a1" class="placehd" href="https://tcss460-foodservice.herokuapp.com/register.html">Register</a>
+
+    </div>
+    <!--Header Image-->
+
+    <h1>Welcome To Helloo Pizza</h1>
+    <div id="grid-main" class="grid-main">
+    <img src="./index_files/beef pizza.jpg" alt="Beef and Onion Pizza" style="width:100%"><h1>Beef and Onion Pizza</h1><p>Pizza made with ground beef(93% lean or leaner), white ring onion, stripped thin red bell pepper</p><p>Starting At:</p><p class="price">$14.99</p><button onclick="window.location.href=&#39;order.html?id=3&#39;">Order Now</button></div>
+    <div id="grid-container" class="grid-container">
+    <div class="grid-item"><img src="./index_files/cheese.jpg" alt="Cheese Pizza" width="200" height="300" style="width:100%"><h2>Cheese Pizza</h2><p>Starting At:</p><p class="price">$12.99</p><button onclick="window.location.href=&#39;order.html?id=1&#39;">Order Now</button></div><div class="grid-item"><img src="./index_files/chicken pizza.jfif" alt="Chicken BBQ Pizza" width="200" height="300" style="width:100%"><h2>Chicken BBQ Pizza</h2><p>Starting At:</p><p class="price">$15.99</p><button onclick="window.location.href=&#39;order.html?id=2&#39;">Order Now</button></div><div class="grid-item"><img src="./index_files/pepperoni.jpg" alt="Pepperonni Pizza" width="200" height="300" style="width:100%"><h2>Pepperonni Pizza</h2><p>Starting At:</p><p class="price">$13.99</p><button onclick="window.location.href=&#39;order.html?id=4&#39;">Order Now</button></div><div class="grid-item"><img src="./index_files/combo.jpg" alt="Combo Pizza" width="200" height="300" style="width:100%"><h2>Combo Pizza</h2><p>Starting At:</p><p class="price">$14.99</p><button onclick="window.location.href=&#39;order.html?id=5&#39;">Order Now</button></div><div class="grid-item"><img src="./index_files/custom.jpg" alt="Custom Pizza" width="200" height="300" style="width:100%"><h2>Custom Pizza</h2><p>Starting At:</p><p class="price">$5.99</p><button onclick="window.location.href=&#39;order.html?id=6&#39;">Order Now</button></div></div>
+
+    <div class="about-us">
+        <h3>About Hello Pizza</h3>
+        <p>Founded in 2015, Hello Pizza's is the recognized world leader 
+            in pizza delivery operating a network of company-owned and 
+            franchise-owned stores in the Vietnam and the West markets. 
+            Hello Pizza's is a company of exceptional people on a mission to be the best 
+            pizza delivery company in Asia and the West. To learn more about Hello Pizza's, 
+            please go to our website at <a href="https://tcss460-foodservice.herokuapp.com/index.html">Hello's Pizza</a> and take a look at our delicious and variety choices of pizza.
+        </p>
+    </div>
+
+
+
+</body><grammarly-desktop-integration data-grammarly-shadow-root="true"></grammarly-desktop-integration></html>

@@ -1,0 +1,263 @@
+<html lang="en">
+  <head>
+    <title>Checkout</title>
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="styles/checkoutStyle.css" />
+    <link rel="stylesheet" href="styles/styles.css" />
+    <link rel="stylesheet" href="styles/cartStyle.css" />
+    <link rel="stylesheet" href="styles/pop-upStyles.css" />
+    <script type="text/javascript" src="scripts/js/helpers.js"></script>
+    <script type="text/javascript" src="scripts/js/pop-up.js"></script>
+    <script type="text/javascript" src="scripts/js/cartScripts.js"></script>
+
+    <script>
+      async function getMemberInfo() {
+        let response = await fetch("/member",  {
+              method: 'GET'
+          })
+        if (response.ok) {
+          let json = await response.json()
+          info = json.info
+
+          if (info !== null && info.length > 0) {
+            $("#firstname").val(info[0].firstname)
+            $("#lastname").val(info[0].lastname)
+            $("#email").val(info[0].email)
+            if (info[0].streetaddress.length > 0) {
+              $("#adr").val(info[0].streetaddress)
+            }
+            if (info[0].city.length > 0) {
+              $("#city").val(info[0].city)
+            }
+            if (info[0].state.length > 0) {
+              $("#state").val(info[0].state)
+            }
+            if (info[0].zipcode.length > 0) {
+              $("#zip").val(info[0].zipcode)
+            }
+            if (info[0].nameoncard.length > 0) {
+              $("#cname").val(info[0].nameoncard)
+            } else {
+              $("#cname").val(info[0].firstname + ' ' + info[0].lastname)
+            }
+            if (info[0].cardnumber.length > 0) {
+              $("#ccnum").val('************' + info[0].cardnumber)
+            }
+            if (info[0].expmonth !== 0) {
+              $("#expmonth").val(info[0].expmonth)
+            }
+            if (info[0].expyear !== 0) {
+              $("#expyear").val(info[0].expyear)
+            }
+          }
+        } else {
+            failResponse(response)
+        }
+      }
+      $(document).ready(function () {
+        if (checkAuth()) {
+          showCartItemsDB(false, false)
+          getMemberInfo()
+        } else {
+          showCartItemsInStorage(false, false)
+        }
+      })
+    </script>
+       
+  </head>
+  <body>
+     <!--Navbar-->
+   <div class = "topnav">
+            
+    <img src="./images/logo.jpg" alt="logo" >
+    
+    <a class = "active" href = "index.html">Homepage</a>
+    <a href = "menu.html">Menu</a>
+    <a id ="a1" href="cart.html">Cart<span id='cart' style="color: red;"></span></a>
+ 
+    </div>
+
+
+    <div class="header">
+  <div class="check-out">
+    <div class="container">
+    
+
+        <div class="header">
+          <div class="bill-info">
+            <h1>Billing Address</h1>
+            <label for="firstname">First Name</label>
+            <input type="text" id="firstname" name="firstname" placeholder="Enter First Name" required>
+            <label for="lastname">Last Name</label>
+            <input type="text" id="lastname" name="lastname" placeholder="Enter Last Name" required>
+            <label for="email"> Email</label>
+            <input type="text" id="email" name="email" placeholder="Enter Email" required>
+            <label for="adr"> Address</label>
+            <input type="text" id="adr" name="address" placeholder="Enter Street Address" required>
+            <label for="city"> City</label>
+            <input type="text" id="city" name="city" placeholder="Enter City" required>
+
+            <div class="header">
+              <div class="bill-info">
+                <label for="state">State</label>
+                <input type="text" id="state" name="state" placeholder="Ex:WA" required>
+              </div>
+              <div class="bill-info">
+                <label for="zip">Zipcode</label>
+                <input type="text" id="zip" name="zip" placeholder="Enter Zipcode" required>
+              </div>
+            </div>
+          </div>
+
+          <div class="bill-info">
+            <h1>Payment</h1>
+            
+            <label for="cname">Name on Card</label>
+            <input type="text" id="cname" name="cardname" placeholder="Enter Name on Card" required>
+            <label for="ccnum">Credit Card Number</label>
+            <input type="text" id="ccnum" name="cardnumber" placeholder="Ex:1234567890123456" required>
+            <label for="expmonth">Expiration Month</label>
+            <input type="text" id="expmonth" name="expmonth" placeholder="Enter Expiration Month" required>
+
+            <div class="header">
+              <div class="bill-info">
+                <label for="expyear">Expiration Year</label>
+                <input type="text" id="expyear" name="expyear" placeholder="Enter Expiration Year" required>
+              </div>
+              <div class="bill-info">
+                <label for="cvv">CVV</label>
+                <input type="text" id="cvv" name="cvv" placeholder="Enter Security Code" required>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <label>
+          <input type="checkbox" checked="checked" name="sameadr"> Shipping Address Same As Billing
+        </label>
+      
+     
+    </div>
+  </div>
+
+    
+      <div class = "cart-page">
+        <h4>Review Items</h4>
+        <!--Table Food-->
+       <table id="table-order-list">
+         <tr>
+           <th>Product</th>
+           <th>Quantity</th>
+           <th>Subtotal</th>
+         </tr>
+         <!--Item 1-->
+         <!-- <tr>
+           <td>
+             <div class="cart-info">
+               <img src ="images/pizza_menu/beef pizza.jpg"  alt="cart-item" width="800" height="200" >
+               <div>
+                
+                 <p>Beef Pizza</p>
+                 <p>Ingredients: Beef, Onion, Cheese, Tomato</p>
+                 <p>Size: Medium</p>
+                 <p>Crust: Regular</p>
+                
+                 <br>
+                 <button class="remove-btn">Remove</button>
+                 <button class="re-order-btn" onclick="location.href='order.html'" >Order Again</button>
+               </div>
+             </div>
+           </td>
+           <td><input type = "number" value = "1"></td>
+           <td>$15</td>
+         </tr>
+          <tr>
+           <td>
+             <div class="cart-info">
+               <img src ="images/pizza_menu/chicken pizza.jfif"  alt="cart-item" width="800" height="200" >
+               <div>
+               
+                 <p>Chicken Pizza</p>
+                 <p>Ingredients: Chicken, Onion, Cheese, Tomato</p>
+                 <p>Size: Medium</p>
+                 <p>Crust: Regular</p>
+               
+                 <br>
+                 <button class="remove-btn">Remove</button>
+                 <button class="re-order-btn" onclick="location.href='order.html'" >Order Again</button>
+               </div>
+             </div>
+           </td>
+           <td><input type = "number" value = "1"></td>
+           <td>$14</td>
+         </tr>
+         
+         
+         
+          <tr>
+           <td>
+             <div class="cart-info">
+               <img src ="images/pizza_menu/cheese.jpg"  alt="cart-item" width="800" height="200" >
+               <div>
+                
+                 <p>Cheese Pizza</p>
+                 <p>Ingredients: Combo Cheese and Tomato</p>
+                 <p>Size: Medium</p>
+                 <p>Crust: Regular</p>
+                 
+                 <br>
+                 <button class="remove-btn">Remove</button>
+                 <button class="re-order-btn" onclick="location.href='order.html'" >Order Again</button>
+               </div>
+             </div>
+           </td>
+           <td><input type = "number" value = "1"></td>
+           <td>$12</td>
+         </tr> -->
+   
+   
+    </table>
+   <!--End Table-->
+    <div class ="total-price">
+      <table>
+        <tr>
+          <td>Subtotal</td>
+          <td class="totals-value" id="cart-subtotal">$0.00</td>
+        </tr>
+        <tr>
+          <td>Tax</td>
+          <td class="totals-value" id="cart-tax">$0.00</td>
+        </tr>
+        <tr>
+          <td>Total</td>
+          <td class="totals-value" id="cart-total">$0.00</td>
+        </tr>
+
+      </table>
+    </div>
+
+
+
+
+
+    </div>
+  </div>
+
+  <label id="errorMessage" style="color:red"></label><br>
+  
+  <!--
+  <div id="place-order" class="popup" onclick="placeOrder()">Place Your Order
+  -->
+
+    <div id= "place-order" class ="popup" onclick="placeOrder()">Place Your Order
+  <span class="popuptext" id="myPopup">Your Order Has Been Placed</span>
+</div>
+
+
+
+
+
+  </body>
+  

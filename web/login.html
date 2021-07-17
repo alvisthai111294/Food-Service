@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+
+    <title>Login</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script type="text/javascript" src="scripts/js/helpers.js"></script>
+
+    <link rel="stylesheet" href="styles/styles.css" />
+    <style>
+        form {
+            border: 3px solid #f1f1f1;
+        }
+        button {
+            background-color: #f05d239f;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            text-align: center;
+            cursor: pointer;
+            width: 100px;
+        }
+     
+
+        button:hover {
+            opacity: 0.8;
+        }
+
+        .cancel-button{
+            width: auto;
+            padding: 10px 18px;
+            background-color: #f44336;
+        }
+
+        .imgcontainer {
+            text-align: center;
+            margin: 24px 0 12px 0;
+        }
+        img.avatar {
+       
+            border-radius: 50%;
+        }
+     
+
+        /* Add padding to containers */
+        .container {
+            padding: 16px;
+        }
+        
+        /* The "Forgot password" text */
+        span.password {
+            float: right;
+            padding-top: 16px;
+        }
+
+        /* Change styles for span and cancel button on extra small screens */
+        @media screen and (max-width: 300px) {
+            span.psw {
+                display: block;
+                float: none;
+            }
+
+            .cancelbtn {
+                width: 100%;
+            }
+        }
+
+    </style>
+
+    <script>
+
+        async function signin() {
+
+            let encoded = window.btoa($("#username").val() + ':' + $("#password").val())
+
+            let response = await fetch("/auth",  {
+                method: 'GET',
+                headers: {
+                    'Authorization': 'Basic ' + encoded
+                }
+            })
+            if (response.ok) { // if HTTP-status is 200-299
+                // get the response body (the method explained below)
+                let json = await response.json()
+                console.log(json)
+
+                if (json.success) {
+                    // sessionStorage.setItem("usn", $('input[name="username"]').val())
+                    sessionStorage.setItem("usn", json.email)
+                    window.location.href = "history.html";
+                }
+            } else {
+                // alert("HTTP-Error: " + response.status)
+                console.log(response.status)
+                let json = await response.json()
+                // console.log(json)
+                $("#errorMessage").html(json.message)
+            }
+        }
+
+        $(document).ready(function () {
+
+            $("#btnCancel").click(backtoHomePage)
+
+            if (typeof(Storage) !== "undefined") {
+                var email = sessionStorage.getItem("email")
+                if (email && email !== null && email !== undefined && email !== '') {
+                    $("#username").val(sessionStorage.getItem("email"))
+                    $("#password").val(sessionStorage.getItem("password"))
+                } else {
+                    $("#username").val('test1@test.com')
+                    $("#password").val('test12345')
+                }
+
+                $("#btnSubmit").click(function () {
+                    if ($('input[name="username"]').val() === '') {
+                        $("#errorMessage").html("*Username is empty!")
+                    } else if ($('input[name="password"]').val() === '') {
+                        $("#errorMessage").html("*Password is empty!")
+                    } else {
+                        signin()
+                    }
+                })
+            }
+        })
+
+    </script>
+
+    </head>
+<body>
+ <!--Navbar-->
+ <div class = "topnav">
+            
+    <img src="./images/logo.jpg" alt="logo" >
+
+    <a class ="active" href="index.html">Homepage</a>
+    <a href = "menu.html">Menu</a>
+    
+  </div>
+
+
+    <div class = "imgcontainer">
+        <img src = "./images/avatar.png" alt ="Avatar" class = "avatar">
+    </div>
+    <div class ="container">
+        <label id="errorMessage" style="color:red"></label>
+        <br>
+        <label for ="username" id="usn"><b>Username</b></label>
+        <input type = "text" placeholder="Enter Username" name ="username" id="username" required>
+
+        <label for ="password"><b>Password</b></label>
+        <input type = "password" placeholder="Enter Password" name ="password" id="password" required>
+
+        <button type ="submit" id="btnSubmit">Login</button>
+        <label>
+            <input type ="checkbox" checked = "checked" name = "remember">Remember me</label>
+        </label>
+
+        </div>
+
+        <div class = "container" style ="background-color: #f1f1f1">
+        <button id="btnCancel" type ="button" class ="cancel-button">Cancel</button>
+        <span class ="password">Forgot <a href="forgot-password.html">Password?</a></span>
+
+    </div>
+    
+  
+
+</body>
+
+</html>

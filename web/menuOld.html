@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Menu</title>
+
+        <link rel="stylesheet" href="styles/menuStyle.css">
+        <link rel="stylesheet" href="styles/styles.css">
+        <!-- jQuery library -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+        <script type="text/javascript" src="scripts/js/helpers.js"></script>
+
+        <script>
+            $(document).ready(function () {
+
+                checkAuth()
+
+                var menuList = '{"list":[{"id":1, "name":"Cheese Pizza", "image":"images/pizza_menu/cheese.jpg", "description": "Cheese and Tomato"}, {"id":2, "name":"Combo Pizza", "image":"images/pizza_menu/combo.jpg", "description": "Everything"}, {"id":3, "name":"Pepperoni Pizza", "image":"images/pizza_menu/pepperoni.jpg", "description": "Only pepperoni"}]}'
+                var listItems = JSON.parse(menuList)
+
+                div = document.getElementById("menu_list")
+                var i = 0;
+                for (const item of listItems.list) {
+
+                    href = 'orders.html?id=' + item.id
+
+                    a = document.createElement('a')
+                    a.setAttribute("href", href)
+                    div.appendChild(a)
+
+                    img = document.createElement('img')
+                    img.setAttribute("src", `${item.image}`)
+                    img.setAttribute("class", "menuImg")
+                    img.setAttribute("alt", `${item.description}`)
+                    a.appendChild(img)
+
+                    a = document.createElement('a')
+                    a.setAttribute("href", href)
+                    div.appendChild(a)
+
+                    h2 = document.createElement('h2')
+                    a.appendChild(h2)
+
+                    b = document.createElement('b')
+                    b.innerHTML = `${item.name}`
+                    h2.appendChild(b)
+
+                    a = document.createElement('a')
+                    a.setAttribute("href", href)
+                    div.appendChild(a)
+
+                    p = document.createElement('p')
+                    p.innerHTML = `${item.description}`
+                    a.appendChild(p)
+
+                    hr = document.createElement('hr')
+                    div.appendChild(hr)
+                    // li.style.background = "black"
+                    // li.style.color = "red"
+                    i++
+                }
+            })
+        </script>
+
+    </head>
+    <body>
+        <!--Navbar-->
+        <div class = "topnav">
+            
+           
+            <img src="./images/logo.jpg" alt="logo" >
+            <a class = "active" href = "index.html">Homepage</a>
+            <a href = "menu.html">Menu</a>
+            <a id ="a1"href = "cart.html">Cart</a>
+            <a id ="a1" class="placehd" href = "login.html">Login</a1>
+            <a id ="a1" class="placehd" href = "register.html">Register</a>
+           
+            
+        </div>
+        
+            <div id="menu_list" class ="foods">
+
+           
+             <h1>HELLO PIZZA MENU </h1>
+             <!-- <img class = "menuImg" src="./pizza/Cheese Tomato.jfif" >
+            <h2><b>Cheese and Tomato Pizza</b></h2>
+             <p>Fresh tomatoes, Mozzarella Chese</p>
+            <hr>
+            
+            <img class = "menuImg" src="./pizza/Thai Chicken.jpg" >
+            <h2><b>Thai Chicken</b></h2>
+            <p>Chicken, Spicy peanut-ginger, Sesame Sauce</p>
+            <hr>
+            
+            <img class = "menuImg" src="./pizza/Hawaiian BBQ.jfif" >
+            <h2><b>Hawaiian BBQ</b></h2>
+            <p>Fresh Pineapple, BBQ chicken, Smoked gouda</p>
+            <hr>
+
+            <img class = "menuImg" src="./pizza/seafood.jpg" >
+            <h2><b>Seafood Pizza</b></h2>
+            <p>Shrimp, Crab Meat, Cheese</p>
+            <hr> -->
+            
+            </div>
+            <!-- <a class = "menuLink" href="orders.html" target="_blank">Order Here</a> -->
+
+            
+          
+           
+    </body>
+</html>

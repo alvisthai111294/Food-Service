@@ -1,0 +1,135 @@
+
+
+/*
+    Top Nav
+*/
+.topnav {
+    background-color: black;
+    overflow: hidden;
+    }
+    
+    .topnav a {
+    float: left;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+    }
+    .topnav a:hover {
+     background-color: red;
+    color: white;
+  
+     }
+     #a1 {
+    float: right;
+    color: #f2f2f2;
+    text-align: right;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+    }
+    .center{
+              
+      text-align: center;
+      font-size:70px;
+      color:white;
+      font-weight: bold;
+    
+      
+  }
+  .bottom-left{
+      position: absolute;
+      bottom: 8px;
+      left: 16px;
+      font-size: 30px;
+      color:white;
+      
+      
+  }
+    img{
+    border: 1px solid black;
+    border-radius: 2px;
+    padding: 0px;
+     width: 100px;
+    float:left;
+  
+     }
+
+
+   
+     /*
+     Menu
+     */
+     
+    body{
+        font-family: 'Poppins', sans-serif;
+    }
+    .header{
+        width:1200px;
+        margin:100px auto;
+    }
+    .title{
+      text-align:center;
+      margin-bottom:40px;
+    }
+    .title h1{
+      text-transform:capitalize;
+      font-size:50px;
+      position:relative;
+      display:inline-block;
+      padding-bottom:10px;
+      color: red;
+      font-family: 'Courier New', Courier, monospace;
+
+    }
+    .title span{
+        
+      display:block;
+      font-size:18px;
+      font-style:italic;
+      margin-bottom:10px;
+    }
+   
+    .menu{
+        display:flex;
+        flex-wrap:wrap;
+      justify-content:space-between;
+    }
+    .single-menu{
+        flex-basis:580px;
+        margin-bottom:40px;
+        padding-bottom:40px;
+        border-bottom:1px solid #ddd;
+      }
+      .single-menu:nth-child(5), .single-menu:nth-child(6){
+        border-bottom:0;
+      }
+      .single-menu{
+        display:flex;
+        flex-direction:row;
+        align-items:center;
+      }
+      .single-menu:hover img{
+        border-radius:0;
+      }
+      .single-menu img{
+      
+      
+        margin-right:50px;
+        
+        border:1px solid #ddd;
+ 
+      }
+      .single-menu h1{
+        text-transform:capitalize;
+        font-size:22px;
+        border-bottom:1px dashed #333;
+        margin-bottom:5px;
+        padding-bottom:5px;
+      }
+      .single-menu h1 span{
+          float:right;
+          color:red;
+          font-style:italic;
+        }

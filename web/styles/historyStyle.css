@@ -1,0 +1,102 @@
+/*---cart items--*/
+.history-page{
+  
+    margin: 40px auto;
+  }
+  tr, td, th
+  {
+    border: 0;
+    /* font-size: 20px; */
+  }
+  p{
+    font-size: 15px;
+    
+  }
+  small{
+    font-size: 14px;
+  }
+  table{
+    width: 100%;
+   
+    
+  }
+  #table {border:0px solid transparent;} 
+  .cart-info{
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .remove-btn {
+    background-color: green; 
+    border: none;
+    color: white;
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    font-size:15px;
+    margin: 4px 2px;
+    cursor: pointer;
+  }
+  th{
+    font-size: 20px;
+    text-align: left;
+    padding: 5px;
+    color: #fff;
+    background:green;
+    font-weight: normal;
+  }
+  td{
+    padding: 10px 5px;
+  }
+  td input{
+    width: 40px;
+    height: 30px;
+    padding:5px;
+  }
+  td img{
+    width: 250px;
+    height: 200px;
+    margin-right: 10px ;
+  }
+  .remove-btn {border-radius: 2px;}
+  .total-price{
+    display: flex;
+    justify-content: flex-end;
+  }
+  .total-price table{
+    
+    border-top: 3px solid red;
+    width: 100%;
+    max-width: 370px;
+  }
+  td:last-child{
+    text-align: right;
+  }
+  th:last-child{
+    text-align: right;
+  }
+  h2{
+      font-size: 40pxpx;
+  }
+  .remove-btn {
+    background-color: red;
+    border: none;
+    color: white;
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    font-size:15px;
+    margin: 4px 2px;
+    cursor: pointer;
+  }
+  .remove-all-btn {
+    background-color: red;
+    border: none;
+    color: white;
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    font-size:15px;
+    margin: 4px 2px;
+    cursor: pointer;
+  }
+ 

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en"></html>
+<head>
+    <title>Past Orders</title>
+    <link rel="stylesheet" href="styles/styles.css">
+    <link rel="stylesheet" href="styles/historyStyle.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script type="text/javascript" src="scripts/js/helpers.js"></script>
+    <script type="text/javascript" src="scripts/js/cartScripts.js"></script>
+    <script type="text/javascript" src="scripts/js/historyScripts.js"></script>
+
+    <script>
+
+        async function showPreviousOrders(editable, removable) {
+          let response = await fetch("/orders",  {
+              method: 'GET'
+          })
+          if (response.ok) {
+            let json = await response.json()
+            var orders = json.orders
+
+            // console.log(json)
+            if (orders && orders.length > 0) {
+              generateItems(orders, editable, removable, '-favorite', true)
+              generateItems(orders, editable, removable, '-previous', false)
+            }
+
+          } else {
+              failResponse(response)
+          }
+        }
+        $(document).ready(function () {
+          if (checkAuth()) {
+            showPreviousOrders(false, true)
+          }
+        })
+    </script>
+
+</head>
+<body>
+    <!--Navbar-->
+    <div class = "topnav">
+            
+        <img src="./images/logo.jpg" alt="logo" >
+        
+        <a class = "active" href = "index.html">Homepage</a>
+        <a href = "menu.html">Menu</a>
+        <a id ="a1" href = "cart.html">Cart<span id='cart' style="color: red;"></span></a>
+        <a id ="a1" class="placehd" href = "login.html">Login</a1>
+        <a id ="a1" class="placehd" href = "register.html">Register</a>
+    </div>
+    <h1>Order History</h1>
+    
+    <div class = "history-page">
+        <h2>Favorite Order</h2>
+        <!--Table Food-->
+       <table id="table-order-list-favorite">
+         <tr>
+           <th>Product</th>
+           <th>Quantity</th>
+           <th>Price</th>
+         </tr>
+         <!--Item 1-->
+         <!-- <tr>
+           <td>
+             <div class="cart-info">
+               <img src ="images/pizza_menu/beef pizza.jpg"  alt="cart-item" width="800" height="200" >
+               <div>
+                 <p>Beef Pizza</p>
+                 <p>Ingredients: Beef, Onion, Cheese, Tomato</p>
+           
+                 <br>
+                 <button class="remove-btn">Remove</button>
+                 <br>
+               </div>
+             </div>
+           </td>
+           <td>1</td>
+           <td>$15</td>
+         </tr>
+         <tr>
+            <td>
+              <div class="cart-info">
+                <img src ="images/pizza_menu/chicken pizza.jfif"  alt="cart-item" width="800" height="200" >
+                <div>
+                  <p>Chicken Pizza</p>
+                  <p>Ingredients: Chicken, Onion, Cheese, Tomato</p>
+                  <small>Price:$15</small>
+                  <br>
+                  <button class="remove-btn">Remove</button>
+                </div>
+               
+              </div>
+            </td>
+            <td>1</td>
+            <td>$15</td>
+          </tr> -->
+
+        </table>
+        <br>
+        <!-- <button class="remove-all-btn" onclick="removeAllFavoriteOrders()">Remove All Favorite Order</button>  -->
+    </div>
+
+   
+    <div class = "history-page">
+        <h2>Past Order</h2>
+        <!--Table Food-->
+       <table id="table-order-list-previous">
+         <tr>
+           <th>Product</th>
+           <th>Quantity</th>
+           <th>Subtotal</th>
+         </tr>
+         <!--Item 1-->
+         <!-- <tr>
+           <td>
+             <div class="cart-info">
+               <img src ="images/pizza_menu/beef pizza.jpg"  alt="cart-item" width="800" height="200" >
+               <div>
+                 <p>Beef Pizza</p>
+                 <p>Ingredients: Beef, Onion, Cheese, Tomato</p>
+                 <small>Price:$15</small>
+                 <br>
+                 <button class="remove-btn">Remove</button>
+                 <br>
+               </div>
+             </div>
+           </td>
+           <td>1</td>
+           <td>$15</td>
+         </tr>
+         <tr>
+            <td>
+              <div class="cart-info">
+                <img src ="images/pizza_menu/combo.jpg"  alt="cart-item" width="800" height="200" >
+                <div>
+                  <p>Combo Pizza</p>
+                  <p>Ingredients: Beef, Chicken, Seafood, Onion, Cheese, Tomato</p>
+                  <small>Price:$20</small>
+                  <br>
+                  <button class="remove-btn">Remove</button>
+                  <br>
+                </div>
+              </div>
+            </td>
+            <td>1</td>
+            <td>$15</td>
+          </tr> -->
+        
+        </table>
+     
+    <!-- <button class="remove-all-btn" onclick="removeAllPreviousOrders()">Remove All Past Order</button>  -->
+     <!--End Table-->
+
+</div>
+  
+    </div>
+   
+        
+       
+
+</body>

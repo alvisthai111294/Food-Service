@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Order Page</title>
+
+    <link rel="stylesheet" href="styles/orderStyle.css">
+    <link rel="stylesheet" href="styles/styles.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript" src="./scripts/js/helpers.js"></script>
+    <script type="text/javascript" src="./scripts/js/scripts.js"></script>
+
+    <script>
+
+        var productID = parseInt(findGetParameter("id"))
+        var basePrice = 0
+        var productName = ''
+        var imagePath = ''
+
+        async function getProduct() {
+            let response = await fetch("/products/" + productID,  {
+                method: 'GET',
+            })
+            if (response.ok) {
+                let json = await response.json()
+
+                products = json.products
+
+                if (products.length > 0) {
+                    productName = products[0].name
+                    imagePath = products[0].imagepath
+                    basePrice = products[0].baseprice
+                    basePrice = Number(basePrice.replace(/[^0-9.-]+/g,""));
+
+                    $("#pizza_type").html(productName)
+
+                    var elements = document.getElementsByClassName("sidebar")
+                    var img = document.createElement("img")
+                    img.setAttribute('src', imagePath)
+                    img.setAttribute('alt', productName)
+                    elements[0].appendChild(img)
+
+                    getTotal(basePrice)
+                }
+
+            } else {
+                failResponse(response)
+            }
+        }
+
+        $(document).ready(function () {
+            var elements = document.getElementsByTagName("input")
+            for (const element of elements) {
+                element.setAttribute("onclick", "getTotal(basePrice)")
+            }
+
+            checkAuth()
+            getProduct()
+
+            $('#form').submit(function (e) {
+                e.preventDefault();
+            });
+
+            $("#quantity").bind('keyup', function () {
+                if ($("#quantity").val() > 1) {
+                   getTotal(basePrice)
+                } else {
+                    $("#quantity").val(1)
+                    getTotal(basePrice)
+                }
+            });
+
+       })
+    </script>
+
+</head>
+<body>
+    
+    <!-- Header -->
+    <header>
+        <div class = "topnav">
+            
+            <img src="./images/logo.jpg" alt="logo" >
+        
+            <a class = "active" href = "index.html">Homepage</a>
+            <a href = "menu.html">Menu</a>
+            <a id ="a1" href = "cart.html">Cart<span id='cart' style="color: red;"></span></a>
+            <a id ="a1" class="placehd" href = "login.html">Login</a1>
+            <a id ="a1" class="placehd" href = "register.html">Register</a>
+            
+        </div>
+
+      
+
+    </header>
+
+    <main>
+    <article class="article">
+        <h1 style="text-align: center;">Order Here</h1>
+        <form id="form" class="menu-all">
+                <div class="menu-item">
+                    <h2>Pizza Type</h2>
+                    <p id="pizza_type"></p>
+                    <!-- <input class="size" type="radio" name="Type" value="Cheese and Tomatoes" checked> Cheese and Tomato Pizza
+                    <br>
+                    <input class="size" type="radio" name="Type" value="Thai Chicken"> Thai Chicken Pizza
+                    <br>
+                    <input class="size" type="radio" name="Type" value="Hawaiian BBQ" > Hawaiian BBQ Pizza
+                    <br>
+                    <input class="size" type="radio" name="Type" value="Seafood"> Seafood Pizza
+                    <br> -->
+                    
+                </div>
+                <div class="menu-item">
+                    <h2>Quantity</h2>
+                    <label for="quantity">Quantity:</label>
+                    <input type="number" id="quantity" name="quantity" min="1" max="20" value="1">
+                </div>
+                <div class="menu-item">
+                    <h2>Pizza Size</h2>
+                    <input class="size" type="radio" name="Size" value="Small" checked>Small
+                    <br>
+                    <input class="size" type="radio" name="Size" value="Medium +$4.00">Medium +$4.00
+                    <br>
+                    <input class="size" type="radio" name="Size" value="Large +$8.00">Large +$8.00
+                    <br>
+                    <input class="size" type="radio" name="Size" value="Extra Large +$12.00">Extra Large +$12.00
+                    <!-- <br>
+                    <p>Base price before ingredients</p> -->
+                </div>
+
+                <div class = "menu-item">
+                    <h2>Pizza Crust</h2>
+                    <input class="crust" type="radio" name="Crust" value="Regular" checked>Regular
+                    <br>
+                    <input class="crust" type="radio" name="Crust" value="Thin +$1.00">Thin +$1.00
+                    <br>
+                    <input class="crust" type="radio" name="Crust" value="Spicy +$2.00" >Spicy +$2.00
+                    <br>
+                    <input class="crust" type="radio" name="Crust" value="Garlic +$3.00">Garlic +$3.00
+                    <!-- <br>
+                    <p>* = No Charge For Regular Crust</p> -->
+                </div>
+
+                <div class="menu-item">
+                    <h2>Pizza Sauces</h2>
+                    <input class="sauce" type="radio" name="Sauce" value="BBQ Sauce" checked>BBQ Sauce
+                    <br>
+                    <input class="sauce" type="radio" name="Sauce" value="Garlic Sauce">Garlic Sauce
+                    <br>
+                    <input class="sauce" type="radio" name="Sauce" value="Tomatoes Sauce">Tomatoes Sauce
+                    <br>
+                    <input class="sauce" type="radio" name="Sauce" value="No Sauce">No Sauce
+                </div>
+
+                <div class="menu-item">
+                    <h2>Cheese Options:</h2>
+                    <input class="cheese" type="radio" name="Cheese" value="Regular" checked>Regular
+                    <br>
+                    <input class="cheese" type="radio" name="Cheese" value="Extra Chesse +$3.00">Extra Chesse +$3.00
+                    <br>
+                    <input class="cheese" type="radio" name="Cheese" value="No Cheese">No Cheese
+                    <!-- <br>
+                    <p>* = Add $3.00 for any size pizza</p> -->
+                </div>
+                <div class="menu-item">
+                    <h2>Meat Options:</h2>
+                    <input class="meat" type="checkbox" name="Meat" value="Sausage">Sausage
+                    <br>
+                    <input class="meat" type="checkbox" name="Meat" value="Germany Bacon">Germany Bacon
+                    <br>
+                    <input class="meat" type="checkbox" name="Meat" value="Ground Beef">Ground Beef
+                    <br>
+                    <input class="meat" type="checkbox" name="Meat" value="Chicken">Chicken
+                    <br>
+                    <input class="meat" type="checkbox" name="Meat" value="Seafood">Seafood
+                    <br>
+                    <p>* = Add $1.00 for each<br>meat item after the first</p>
+                </div>
+                <div class="menu-item">
+                    <h2>Veggies Options:</h2>
+                    <input class="veggies" type="checkbox" name="Veggies" value="Tomatoes">Tomatoes
+                    <br>
+                    <input class="veggies" type="checkbox" name="Veggies" value="Green Peppers">Green Peppers
+                    <br>
+                    <input class="veggies" type="checkbox" name="Veggies" value="Mushrooms">Mushrooms
+                    <br>
+                    <input class="veggies" type="checkbox" name="Veggies" value="Onions">Onions
+                    <br>
+                    <input class="veggies" type="checkbox" name="Veggies" value="Spinach">Spinach
+                    <br>
+                    <input class="veggies" type="checkbox" name="Veggies" value="Jalapeno">Jalapeno
+                    <br>
+                    <p>* = Add $1.00 for each<br>veggie item after the first</p>
+                </div>
+        </form>
+
+        <br>
+            <h2 id="msg" style="color:green; text-align: center;"></h2>
+        <br>
+
+        <div class="controls">
+            <div class="button1" onclick="addProductToCart()">
+                <p>Add to Cart</p>
+            </div>
+            <div class="button2" onclick="clearAll()">
+                <p>New Order</p>
+            </div>
+        </div>
+
+        <!-- <div id="showText1"></div>
+        <div id="showText2"></div>
+        <div id="totalPrice1">
+            <h3>Your Total:</h3>
+        </div>
+        <div id="totalPrice2"></div>
+        </div> -->
+    </article>
+    <aside class="sidebar">
+        <div class="component">
+            <div class="header">Selected Items</div>
+            <div class="content">
+                <div class="empty-text">Your cart is currently empty</div>
+
+                <div class="cart-detail">
+                    <div id="showText1"></div>
+                    <div id="showText2"></div>
+                    <div id="totalPrice1">
+                        <h3>Your Total:</h3>
+                    </div>
+                    <div id="totalPrice2"></div>
+                    <!-- </div> -->
+                </div>
+
+                <!-- <ul id="cartItem" class="items list"></ul> -->
+            </div>
+            <!-- <div class="footer">
+                <button class="button">Checkout</button>
+                <button class="button empty-cart" onclick="emptyCart()">Empty Cart</button>
+            </div> -->
+       
+        </div>
+        <!-- <img src = "images/pizza_menu/cheese.jpg" alt = "Cheese Pizza"> -->
+    </aside>
+    
+    </main>
+    <!-- <footer></footer> -->
+
+</body>
+</html>

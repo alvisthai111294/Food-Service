@@ -1,0 +1,39 @@
+/* Popup container */
+.popup {
+    background-color: black;
+    color: white;
+    padding: 12px;
+     border: none;
+    width: 100%;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 17px;
+   text-align: center;
+  }
+  
+  /* The actual popup (appears on top) */
+  .popup .popuptext {
+    border-radius: 7px;
+    background:green;
+    margin:30px auto 0;
+    padding:6px;  
+    visibility: hidden;
+    position:absolute;
+    width:800px;
+    bottom: -1685px;
+    left: 50%;
+    margin-left: -400px; 
+    margin-top: -400px; 
+  
+  }
+  
+  
+  
+  .popup .show {
+    visibility: visible;
+    -webkit-animation: fadeIn 0.05s;
+    animation: fadeIn 0.05s
+  }
+  
+ 
+ 
